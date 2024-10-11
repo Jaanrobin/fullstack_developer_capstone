@@ -1,8 +1,9 @@
 # Uncomment the following imports before adding the Model code
 
 from django.db import models
-from django.utils.timezone import now
-from django.core.validators import MaxValueValidator, MinValueValidator
+
+# from django.utils.timezone import now
+# from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Create your models here.
@@ -44,4 +45,6 @@ class CarModel(models.Model):
     )  # Optional field to mark if the car model is electric
 
     def __str__(self):
-        return f"{self.car_make.name} {self.name} ({self.type}, {self.year.year})"
+        return (
+            f"{self.car_make.name} {self.name} ({self.type}, {self.year.year})"
+        )
