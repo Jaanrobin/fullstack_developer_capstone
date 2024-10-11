@@ -7,6 +7,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
+
 class CarMake(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -17,25 +18,30 @@ class CarMake(models.Model):
 
 
 class CarModel(models.Model):
-    car_make = models.ForeignKey('CarMake', on_delete=models.CASCADE)  # Many-to-One relationship
+    car_make = models.ForeignKey(
+        "CarMake", on_delete=models.CASCADE
+    )  # Many-to-One relationship
     dealer_id = models.IntegerField()  # Refers to dealer in Cloudant database
     name = models.CharField(max_length=100)
-    
+
     CAR_TYPES = [
-        ('SEDAN', 'Sedan'),
-        ('SUV', 'SUV'),
-        ('WAGON', 'Wagon'),
-        ('HATCHBACK', 'Hatchback'),
-        ('COUPE', 'Coupe'),
-        ('CONVERTIBLE', 'Convertible'),
+        ("SEDAN", "Sedan"),
+        ("SUV", "SUV"),
+        ("WAGON", "Wagon"),
+        ("HATCHBACK", "Hatchback"),
+        ("COUPE", "Coupe"),
+        ("CONVERTIBLE", "Convertible"),
     ]
-    type = models.CharField(max_length=15, choices=CAR_TYPES, default='SUV')
-    
+    type = models.CharField(max_length=15, choices=CAR_TYPES, default="SUV")
+
     year = models.DateField()  # Date field for the year of the car model
-    
-    fuel_type = models.CharField(max_length=20, blank=True, null=True)  # Optional field for fuel type (e.g., Petrol, Diesel)
-    is_electric = models.BooleanField(default=False)  # Optional field to mark if the car model is electric
-    
+
+    fuel_type = models.CharField(
+        max_length=20, blank=True, null=True
+    )  # Optional field for fuel type (e.g., Petrol, Diesel)
+    is_electric = models.BooleanField(
+        default=False
+    )  # Optional field to mark if the car model is electric
+
     def __str__(self):
         return f"{self.car_make.name} {self.name} ({self.type}, {self.year.year})"
-
