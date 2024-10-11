@@ -32,7 +32,7 @@ jobs:
     - name: Run Linter
       run: |
         # Exclude unnecessary directories like node_modules, migrations, etc.
-        flake8 --exclude=node_modules,migrations,__pycache__ .
+        flake8 --max-line-length=120 --exclude=node_modules,migrations,__pycache__ .
         echo "Linted all the Python files successfully"
 
   lint_js:
