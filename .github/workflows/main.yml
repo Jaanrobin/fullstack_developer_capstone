@@ -31,29 +31,28 @@ jobs:
 
     - name: Run Linter
       run: |
-        pwd
-        # This command finds all Python files recursively and runs flake8 on them
-        find . -name "*.py" -exec flake8 {} +
-        echo "Linted all the python files successfully"
+        # Exclude unnecessary directories like node_modules, migrations, etc.
+        flake8 --exclude=node_modules,migrations,__pycache__ .
+        echo "Linted all the Python files successfully"
 
   lint_js:
-      name: Lint JavaScript Files
-      runs-on: ubuntu-latest
+    name: Lint JavaScript Files
+    runs-on: ubuntu-latest
 
-      steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14
 
-      - name: Install JSHint
-        run: npm install jshint --global
+    - name: Install JSHint
+      run: npm install jshint --global
 
-      - name: Run Linter
-        run: |
-          # This command finds all JavaScript files recursively and runs JSHint on them
-          find ./server/database -name "*.js" -exec jshint {} +
-          echo "Linted all the js files successfully"
+    - name: Run Linter
+      run: |
+        # Exclude node_modules directory when running JSHint
+        find ./server/database -path ./server/database/node_modules -prune -o -name "*.js" -exec jshint {} +
+        echo "Linted all the JS files successfully"
